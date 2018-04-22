@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebApplication1.AppsEntity>
+
+@section scripts{
+    @Scripts.Render("~/bundles/entitycontroller")
+}
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div ng-app="myModule">
+    <div ng-controller="entityController">
+        <form>
+            <h2>Add Entity</h2>
+            <br />
+            Name: <input type="text" ng-model="entity.name">
+            Status: <input type="text" ng-model="entity.status">
+            <br />
+            <h2>Add Participant</h2>
+            <br />
+            <input type="button" value="Add Participant" ng-click="AddParticipant()"/>
+            <br/>
+            <table border="1">
+                <tr ng-repeat="x in entity.participants">
+                    <td><input type="text" ng-model="x.participantName"></td>
+                    <td><input type="text" ng-model="x.type"></td>
+                </tr>
+            </table>
+            <br/>
+            <input type="submit" value="Save" ng-click="save(entity)" />
+        </form>
+    </div>
+</div>
+
+

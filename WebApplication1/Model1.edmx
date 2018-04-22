@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="AppsEntities" EntityType="Model1.Store.AppsEntities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Participants" EntityType="Model1.Store.Participants" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AppsEntityParticipants" Association="Model1.Store.AppsEntityParticipants">
+      <End Role="AppsEntity" EntitySet="AppsEntities" />
+      <End Role="Participants" EntitySet="Participants" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AppsEntities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="true" />
+    <Property Name="AddedDate" Type="datetime" Nullable="true" />
+    <Property Name="UdatedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Participants">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParticipantName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="true" />
+    <Property Name="AddedDate" Type="datetime" Nullable="true" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="true" />
+    <Property Name="AppsEntity_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="AppsEntityParticipants">
+    <End Role="AppsEntity" Type="Model1.Store.AppsEntities" Multiplicity="1" />
+    <End Role="Participants" Type="Model1.Store.Participants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppsEntity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participants">
+        <PropertyRef Name="AppsEntity_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppsEntities" EntityType="Model1.AppsEntity" />
+          <EntitySet Name="Participants" EntityType="Model1.Participants" />
+          <AssociationSet Name="AppsEntityParticipants" Association="Model1.AppsEntityParticipants">
+            <End Role="AppsEntity" EntitySet="AppsEntities" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <EntitySet Name="GicsIndustries" EntityType="Model1.GicsIndustry" />
+        </EntityContainer>
+        <EntityType Name="AppsEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="true" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="true" />
+          <Property Name="UdatedDate" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Participants" Relationship="Model1.AppsEntityParticipants" FromRole="AppsEntity" ToRole="Participants" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantName" Type="String" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="true" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="AppsEntity" Relationship="Model1.AppsEntityParticipants" FromRole="Participants" ToRole="AppsEntity" />
+        </EntityType>
+        <Association Name="AppsEntityParticipants">
+          <End Type="Model1.AppsEntity" Role="AppsEntity" Multiplicity="1" />
+          <End Type="Model1.Participants" Role="Participants" Multiplicity="*" />
+        </Association>
+        <EntityType Name="GicsIndustry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsActive" Type="DateTime" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="AppsEntities">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.AppsEntity)">
+        <MappingFragment StoreEntitySet="AppsEntities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+          <ScalarProperty Name="UdatedDate" ColumnName="UdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participants">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Participants)">
+        <MappingFragment StoreEntitySet="Participants">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParticipantName" ColumnName="ParticipantName" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AppsEntityParticipants" TypeName="Model1.AppsEntityParticipants" StoreEntitySet="Participants">
+      <EndProperty Name="AppsEntity">
+        <ScalarProperty Name="Id" ColumnName="AppsEntity_Id" />
+      </EndProperty>
+      <EndProperty Name="Participants">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
